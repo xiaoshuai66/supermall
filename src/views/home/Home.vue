@@ -14,8 +14,8 @@
      @scroll="contentScroll"
      :pull-up-load="true"
      @pullingUp="loadMore"
+     :data="goods[currentType].list"
      >
-     <div v-for="item in arr">{{item}}</div>
       <home-swiper :banner="banner" ref="hSwiper" @swiperImageLoad="swiperImageLoad"></home-swiper>
       <recommend-view :recommend="recommend"></recommend-view>
       <feature-view></feature-view>
@@ -70,8 +70,6 @@
         tabOffsetTop: 0,
         isTabFixed: false,
         saveY: 0,
-        arr: [],
-        reqCount: 1
       }
     },
     mixins: [itemListenerMixin],
@@ -85,7 +83,6 @@
       // this.$refs.hSwiper.startTimer();
       this.$refs.scroll.refresh();
       this.$refs.scroll.scrollTo(0, this.saveY, 0);
-      
     },
     deactivated: function () {
       // this.$refs.hSwiper.stopTimer();
@@ -141,7 +138,7 @@
           this.$refs.scroll.finishPullUp();
         })
         .catch(err => {
-          console.log('已经加载完了没有数据了哦');
+          this.$toast.show('已经加载完了没有数据了哦');
           this.$refs.scroll.finishPullUp();
         })
       }

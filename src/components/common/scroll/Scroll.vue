@@ -19,6 +19,12 @@
       pullUpLoad: { //是否需要上拉加载更多
         type: Boolean,
         default: false
+      },
+      data: {
+        type: Array,
+        default() {
+          return []
+        }
       }
     },
     data() {
@@ -65,6 +71,11 @@
       },
       getScrollY() {
         return this.scroll ? this.scroll.y : 0;
+      }
+    },
+    watch: {
+      data() {
+        setTimeout(this.refresh, 20);
       }
     },
   }
